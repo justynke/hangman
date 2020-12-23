@@ -3,25 +3,32 @@ from random import choice
 
 # GAME INTRO
 
-print("H A N G M A N\n")
+print("H A N G M A N")
 words = ['python', 'java', 'kotlin', 'javascript']
 chosen_word = choice(words)
 temp_word = list(len(chosen_word)*"-")
 
 
-tries = 0
+lives = 8
 
-while tries < 8:
-
+while lives > 0:
+    print()
     print("".join(temp_word))
     char = input("Input a letter:")
     if char in chosen_word:
-        print()
-        for i in range (len(chosen_word)):
-            if chosen_word[i] == char:
-                temp_word[i] = char
+        if char in temp_word:
+            print("No improvements")
+            lives -= 1
+        else:
+            for i in range (len(chosen_word)):
+                if chosen_word[i] == char:
+                    temp_word[i] = char
     else:
-        print("That letter doesn't appear in the word\n")
-    tries += 1
+        print("That letter doesn't appear in the word")
+        lives -= 1
+    if "-" not in temp_word:
+        print("".join(temp_word))
+        print("You guessed the word!\nYou survived!")
+        exit()
 
-print("Thanks for playing!\nWe'll see how well you did in the next stage")
+print("You lost!")
